@@ -16,7 +16,7 @@ class CreateUserController extends AbstractController
     {
         $theUser = new User();
         $theUser->setEmail("admin@gmail.com");
-        $theUser->setRoles(['ROLE_SUPER_ADMIN']);
+        $theUser->setRoles(['ROLE_COMPTABLE']);
         $plainTextPassword = "1234";
 
         $hashedPassword = $passwordHasher->hashPassword(

@@ -54,6 +54,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: FicheFrais::class)]
     private Collection $fichesFrais;
 
+    #[ORM\Column]
+    private ?int $oldId = null;
+
     public function __construct()
     {
         $this->fichesFrais = new ArrayCollection();
@@ -239,6 +242,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $fichesFrais->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getOldId(): ?int
+    {
+        return $this->oldId;
+    }
+
+    public function setOldId(int $oldId): static
+    {
+        $this->oldId = $oldId;
 
         return $this;
     }

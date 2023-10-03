@@ -37,9 +37,13 @@ class FicheFrais
     #[ORM\OneToMany(mappedBy: 'ficheFrais', targetEntity: LigneFraisForfait::class)]
     private Collection $ligneFraisForfait;
 
+    #[ORM\OneToMany(mappedBy: 'ficheFrais', targetEntity: LigneFraisHorsForfait::class)]
+    private Collection $ligneFraisHorsForfaits;
+
     public function __construct()
     {
         $this->ligneFraisForfait = new ArrayCollection();
+        $this->ligneFraisHorsForfaits = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -143,6 +147,36 @@ class FicheFrais
             // set the owning side to null (unless already changed)
             if ($ligneFraisForfait->getFicheFrais() === $this) {
                 $ligneFraisForfait->setFicheFrais(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, LigneFraisHorsForfait>
+     */
+    public function getLigneFraisHorsForfaits(): Collection
+    {
+        return $this->ligneFraisHorsForfaits;
+    }
+
+    public function addLigneFraisHorsForfait(LigneFraisHorsForfait $ligneFraisHorsForfait): static
+    {
+        if (!$this->ligneFraisHorsForfaits->contains($ligneFraisHorsForfait)) {
+            $this->ligneFraisHorsForfaits->add($ligneFraisHorsForfait);
+            $ligneFraisHorsForfait->setFicheFrais($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLigneFraisHorsForfait(LigneFraisHorsForfait $ligneFraisHorsForfait): static
+    {
+        if ($this->ligneFraisHorsForfaits->removeElement($ligneFraisHorsForfait)) {
+            // set the owning side to null (unless already changed)
+            if ($ligneFraisHorsForfait->getFicheFrais() === $this) {
+                $ligneFraisHorsForfait->setFicheFrais(null);
             }
         }
 

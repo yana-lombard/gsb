@@ -23,6 +23,10 @@ class LigneFraisHorsForfait
     #[ORM\Column(type: Types::DECIMAL, precision: 7, scale: 2)]
     private ?string $montant = null;
 
+    #[ORM\ManyToOne(inversedBy: 'ligneFraisHorsForfaits')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?FicheFrais $ficheFrais = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -60,6 +64,18 @@ class LigneFraisHorsForfait
     public function setMontant(string $montant): static
     {
         $this->montant = $montant;
+
+        return $this;
+    }
+
+    public function getFicheFrais(): ?FicheFrais
+    {
+        return $this->ficheFrais;
+    }
+
+    public function setFicheFrais(?FicheFrais $ficheFrais): static
+    {
+        $this->ficheFrais = $ficheFrais;
 
         return $this;
     }

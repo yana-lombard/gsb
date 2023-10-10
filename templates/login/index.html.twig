@@ -15,16 +15,9 @@
         <label for="password">Password:</label>
         <input type="password" id="password" name="_password">
 
-
-        <button type="submit">login</button>
-    </form>
-
-    <form action="{{ path('app_login') }}" method="post">
-        {# ... the login fields #}
-
         <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-
         <button type="submit">login</button>
     </form>
+
 
 {% endblock %}

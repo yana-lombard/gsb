@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes fiches de frais{% endblock %}
+
+{% block body %}
+    {{ form_start(form) }}
+    {{ form_row(form.selectedMonth) }}
+    <button type="submit">Valider</button>
+    {{ form_end(form) }}
+
+    {% if selectedFiche is not null %}
+        <br>Fiches de frais: {{ selectedFiche.mois }} </br>{{ selectedFiche.montantValid }}€</p>
+
+    {% endif %}
+{% endblock %}

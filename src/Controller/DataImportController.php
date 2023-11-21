@@ -6,6 +6,7 @@ use App\Entity\Etat;
 use App\Entity\FicheFrais;
 use App\Entity\LigneFraisHorsForfait;
 use App\Entity\User;
+use DateTime;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -94,28 +95,28 @@ class DataImportController extends AbstractController
     }
 
     #[Route('/fichefraisHF', name: 'app_data_import_ficheFraisHF')]
-    public function ficheFraisHF(EntityManagerInterface $entityManager,  ManagerRegistry $doctrine): Response
+    public function ficheFraisHF( ManagerRegistry $doctrine): Response
     {
-        $fichesFraisHFjson = file_get_contents('./lignefraishorsforfait.json');
-        $fichesFraisHF = json_decode($fichesFraisHFjson, true);
+        $fichefraisHFjson = file_get_contents('./lignefraishorsforfait.json');
+        $fichefraisHFs = json_decode($fichefraisHFjson, true);
 
-        foreach ($fichesFraisHF as $ficheFraisHF) {
-            $newFfHF = new LigneFraisHorsForfait();
-            $newFfHF->setLibelle('libelle');
-            $newFfHF->setDate(new \DateTime($ficheFraisHF['date']));
-            $newFfHF->setMontant($ficheFraisHF['montant']);
-            $user = $doctrine->getRepository(User::class)->findOneBy(['oldId' => $ficheFraisHF['idVisiteur']]);
-            $ficheFrais = $doctrine->getRepository(FicheFrais::class)->findOneBy(['user' => $user, 'mois' => $ficheFraisHF['mois']]);
-            $newFfHF->setFicheFrais($ficheFrais);
+        foreach ($fichefraisHFs as $fichefraisHF) {
 
-            $entityManager->persist($newFfHF);
+            $newFicheHF = new LigneFraisHorsForfait();
+            $newFicheHF->setLibelle($fichefraisHF['libelle']);
+            $newFicheHF->setMontant($fichefraisHF['montant']);
+            $user = $doctrine->getRepository(User::class)->findOneBy(["oldId" => $fichefraisHF["idVisiteur"]]);
+            $newFicheHF->setFicheFrais($doctrine->getRepository(FicheFrais::class)->findOneBy(['user' => $user, 'mois' => $fichefraisHF["mois"]]));
+            $dateFicheHF = new DateTime($fichefraisHF['date']);
+            $newFicheHF->setDate($dateFicheHF);
 
+            $doctrine->getManager()->persist($newFicheHF);
+            $doctrine->getManager()->flush();
         }
-        $entityManager->flush();
+
         return $this->render('data_import/index.html.twig', [
             'controller_name' => 'DataImportController',
         ]);
     }
-
 
 }

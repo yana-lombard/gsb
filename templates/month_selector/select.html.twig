@@ -9,7 +9,43 @@
     {{ form_end(form) }}
 
     {% if selectedFiche is not null %}
-        <br>Fiches de frais: {{ selectedFiche.mois }} </br>{{ selectedFiche.montantValid }}€</p>
+        <p>Fiches de frais: {{ selectedFiche.moisFormated | date('m-Y') }} </br>{{ selectedFiche.montantValid }}€</p>
+
+        <h4> <strong> Mes fiches frais hors forfaits:</strong> </h4>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Libellé</th>
+                <th scope="col">Montant</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for uneLigneFHF in selectedFiche.ligneFraisHorsForfaits %}
+                <tr>
+                    <th scope="row">{{ loop.index }}</th>
+                    <td>{{ uneLigneFHF.libelle }}</td>
+                    <td>{{ uneLigneFHF.montant }} €</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+
+        <h4> <strong>Mes fiches frais forfaits: </strong></h4>
+        <table class="table">
+            <thead>
+            {% for uneLigneFF in selectedFiche.ligneFraisForfait %}
+                <th scope="col">{{uneLigneFF.fraisForfait.libelle}}</th>
+            {% endfor %}
+            </thead>
+
+            <tbody>
+            {% for uneLigneFF in selectedFiche.ligneFraisForfait %}
+                <th scope="col">{{uneLigneFF.quantite}}</th>
+            {% endfor %}
+            </tbody>
+        </table>
 
     {% endif %}
 {% endblock %}

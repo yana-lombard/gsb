@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Monolog\DateTimeImmutable;
 
 #[ORM\Entity(repositoryClass: FicheFraisRepository::class)]
 class FicheFrais
@@ -34,7 +35,7 @@ class FicheFrais
     #[ORM\ManyToOne(inversedBy: 'fichesFrais')]
     private ?User $user = null;
 
-    #[ORM\OneToMany(mappedBy: 'ficheFrais', targetEntity: LigneFraisForfait::class)]
+    #[ORM\OneToMany(mappedBy: 'ficheFrais', targetEntity: LigneFraisForfait::class, fetch:'EAGER')]
     private Collection $ligneFraisForfait;
 
     #[ORM\OneToMany(mappedBy: 'ficheFrais', targetEntity: LigneFraisHorsForfait::class)]
@@ -61,6 +62,12 @@ class FicheFrais
         $this->mois = $mois;
 
         return $this;
+    }
+
+    public function getMoisFormated(): ?\DateTimeImmutable
+    {
+        return DateTimeImmutable::createFromFormat('Ym', $this->getMois()) ;
+
     }
 
     public function getNbJustificatifs(): ?int

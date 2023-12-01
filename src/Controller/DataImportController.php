@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Etat;
 use App\Entity\FicheFrais;
+use App\Entity\FraisForfait;
+use App\Entity\LigneFraisForfait;
 use App\Entity\LigneFraisHorsForfait;
 use App\Entity\User;
 use DateTime;
@@ -119,4 +121,41 @@ class DataImportController extends AbstractController
         ]);
     }
 
+    #[Route('/import/lignesff', name: 'app_data_import_lignesff')]
+    public function lignesff(ManagerRegistry $doctrine): Response
+    {
+        $lignesfraisforfaitjson = file_get_contents('./lignefraisforfait.json');
+        $lignesfraisforfait = json_decode($lignesfraisforfaitjson);
+        foreach ($lignesfraisforfait as $lignefraisforfait) {
+            $newlignefraisforfait = new LigneFraisForfait(null, null, null);
+            $theUser = $doctrine->getRepository(User::class)->findOneBy(['oldId' => $lignefraisforfait->idVisiteur]);
+            $theFicheFrais = $doctrine->getRepository(FicheFrais::class)->findOneBy(['user' => $theUser, 'mois' => $lignefraisforfait->mois]);
+            $newlignefraisforfait->setFichefrais($theFicheFrais);
+            $newlignefraisforfait->setQuantite($lignefraisforfait->quantite);
+
+            switch ($lignefraisforfait->idFraisForfait) {
+                case 'ETP' :
+                    $newlignefraisforfait->setFraisforfait($doctrine->getRepository(FraisForfait::class)->find(1));
+                    break;
+                case 'KM' :
+                    $newlignefraisforfait->setFraisforfait($doctrine->getRepository(FraisForfait::class)->find(2));
+                    break;
+                case 'NUI' :
+                    $newlignefraisforfait->setFraisforfait($doctrine->getRepository(FraisForfait::class)->find(3));
+                    break;
+                case 'REP' :
+                    $newlignefraisforfait->setFraisforfait($doctrine->getRepository(FraisForfait::class)->find(4));
+                    break;
+                default :
+                    $newlignefraisforfait->setFraisforfait($doctrine->getRepository(Etat::class)->find(1));
+            }
+
+            $doctrine->getManager()->persist($newlignefraisforfait);
+            $doctrine->getManager()->flush();
+        }
+
+        return $this->render('data_import/index.html.twig', [
+            'controller_name' => 'DataImportController',
+        ]);
+    }
 }

@@ -189,4 +189,33 @@ class FicheFrais
 
         return $this;
     }
+
+    public function calculateTotalFraisForfait(): float
+    {
+        $totalFraisForfait = 0.0;
+
+        foreach ($this->getLigneFraisForfait() as $ligneFraisForfait) {
+            $totalFraisForfait += $ligneFraisForfait->getQuantite() * $ligneFraisForfait->getFraisForfait()->getMontant();
+        }
+
+        return $totalFraisForfait;
+    }
+
+    public function calculateTotalFraisHorsForfait(): float
+    {
+        $totalFraisHorsForfait = 0.0;
+
+        foreach ($this->getLigneFraisHorsForfaits() as $ligneFraisHorsForfait) {
+            $totalFraisHorsForfait += $ligneFraisHorsForfait->getMontant();
+        }
+
+        return $totalFraisHorsForfait;
+    }
+
+    public function calculateTotalAmount(): float
+    {
+        return $this->calculateTotalFraisForfait() + $this->calculateTotalFraisHorsForfait();
+    }
 }
+
+

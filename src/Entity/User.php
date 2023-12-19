@@ -57,6 +57,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $oldId = null;
 
+    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: '0')]
+    private ?string $primeInflation = null;
+
     public function __construct()
     {
         $this->fichesFrais = new ArrayCollection();
@@ -254,6 +257,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setOldId(string $oldId): static
     {
         $this->oldId = $oldId;
+
+        return $this;
+    }
+
+    public function getPrimeInflation(): ?string
+    {
+        return $this->primeInflation;
+    }
+
+    public function setPrimeInflation(string $primeInflation): static
+    {
+        $this->primeInflation = $primeInflation;
 
         return $this;
     }

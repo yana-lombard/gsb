@@ -73,3 +73,16 @@ U
 %templates/create_user/index.html.twig,4\a\4abf0217915ca6dabab7645d798e5ab75c3c4a0d
 T
 $templates/connection/index.html.twig,d\c\dc4ade54d700f68fc2c4ca20a83280f272a5542e
+:
+
+.env.local,1\f\1fa30fea3e9ae270a3c38a6113a3689d8987d108
+U
+%templates/frais_forfait/new.html.twig,a\8\a86a441e832ef469304f8c2079cd74c21291491b
+R
+"src/Controller/PrimeController.php,7\3\733d665031db23487ce9ddafb229603dbaeeed7e
+V
+&templates/frais_forfait/show.html.twig,4\6\465747cdb7663734cf9bd406d5ea44a5d41242f0
+O
+templates/prime/index.html.twig,8\0\80b2ba576e40f151f260a608c9ec5c1fb588327c
+Y
+)src/Repository/FraisForfaitRepository.php,d\6\d696de462b9a1e7e7b274ffd48213ab6e9fa9238

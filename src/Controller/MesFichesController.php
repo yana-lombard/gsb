@@ -27,18 +27,12 @@ class MesFichesController extends AbstractController
             /** @var FicheFrais $selectedFiche */
             $selectedFiche = $form->get('selectedMonth')->getData();
 
-            $totalFraisForfait = $selectedFiche->getTotalFraisForfait();
-            $totalFraisHorsForfait = $selectedFiche->getTotalFraisHorsForfait();
-            $totalAmount = $selectedFiche->getTotalAmount();
         }
 
         return $this->render('month_selector/select.html.twig', [
             'controlleur_name' => 'MesFichesControlleur',
             'form' => $form->createView(),
             'selectedFiche' => $selectedFiche,
-            'totalFraisForfait' => $totalFraisForfait,
-            'totalFraisHorsForfait' => $totalFraisHorsForfait,
-            'totalAmount' => $totalAmount,
         ]);
     }
 

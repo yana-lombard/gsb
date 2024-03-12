@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\FicheFrais;
+use App\Entity\FraisForfait;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -19,6 +20,24 @@ class FicheFraisRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, FicheFrais::class);
+    }
+
+    public function add(FraisForfait $entity, bool $flush = false): void
+    {
+        $this->getEntityManager()->persist($entity);
+
+        if($flush){
+            $this->getEntityManager()->flush();
+        }
+    }
+
+    public function remove(FraisForfait $entity, bool $flush = false): void
+    {
+        $this->getEntityManager()->remove($entity);
+
+        if($flush){
+            $this->getEntityManager()->$flush();
+        }
     }
 
 //    /**
@@ -45,4 +64,14 @@ class FicheFraisRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+
+    public function findByYear($year): ?array{
+          return $this->createQueryBuilder('ff')
+            ->where('ff.mois LIKE : valYear')
+            ->setParameter('valYear', $year.'%')
+            ->getQuery()
+            ->getResult()
+              ;
+    }
 }

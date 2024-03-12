@@ -190,32 +190,25 @@ class FicheFrais
         return $this;
     }
 
-    public function calculateTotalFraisForfait(): float
-    {
-        $totalFraisForfait = 0.0;
-
-        foreach ($this->getLigneFraisForfait() as $ligneFraisForfait) {
-            $totalFraisForfait += $ligneFraisForfait->getQuantite() * $ligneFraisForfait->getFraisForfait()->getMontant();
+   public function montantForfait(){
+        $montantForfait = 0;
+        foreach ($this->ligneFraisForfait as $ligneFraisForfait){
+            $montantForfait += $ligneFraisForfait->getQuantite() * $ligneFraisForfait->getFraisForfait()->getMontant;
         }
+        return $montantForfait;
+   }
 
-        return $totalFraisForfait;
-    }
-
-    public function calculateTotalFraisHorsForfait(): float
-    {
-        $totalFraisHorsForfait = 0.0;
-
-        foreach ($this->getLigneFraisHorsForfaits() as $ligneFraisHorsForfait) {
-            $totalFraisHorsForfait += $ligneFraisHorsForfait->getMontant();
+   public function montantHorsForfait(){
+        $montantHorsForfait = 0;
+        foreach ($this->ligneFraisHorsForfaits as $ligneFraisHorsForfait){
+            $montantHorsForfait += $ligneFraisHorsForfait->getMontant();
         }
+        return $montantHorsForfait;
+   }
 
-        return $totalFraisHorsForfait;
-    }
-
-    public function calculateTotalAmount(): float
-    {
-        return $this->calculateTotalFraisForfait() + $this->calculateTotalFraisHorsForfait();
-    }
+   public function montantTotal(){
+        return $this->montantForfait() + $this->montantHorsForfait();
+   }
 }
 
 

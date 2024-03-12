@@ -121,7 +121,7 @@ class DataImportController extends AbstractController
         ]);
     }
 
-    #[Route('/import/lignesff', name: 'app_data_import_lignesff')]
+    #[Route('/lignesff', name: 'app_data_import_lignesff')]
     public function lignesff(ManagerRegistry $doctrine): Response
     {
         $lignesfraisforfaitjson = file_get_contents('./lignefraisforfait.json');

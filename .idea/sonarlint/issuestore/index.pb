@@ -25,8 +25,6 @@ Q
 !public/lignefraishorsforfait.json,3\9\39a30e9a03182fb37988a3484c878c4acade4d9d
 W
 'src/Controller/DataImportController.php,7\b\7b887684f50f61dbc59f207136516ff2aeeea5c5
-W
-'src/Controller/ConnectionController.php,e\5\e5dfd6c7a900b05fc587e4598326a070073ecf55
 Q
 !src/Controller/EtatController.php,e\3\e33bb336cd05e345bf5376e7c92721a68b029c02
 W
@@ -86,3 +84,11 @@ O
 templates/prime/index.html.twig,8\0\80b2ba576e40f151f260a608c9ec5c1fb588327c
 Y
 )src/Repository/FraisForfaitRepository.php,d\6\d696de462b9a1e7e7b274ffd48213ab6e9fa9238
+]
+-.idea/sonarlint/securityhotspotstore/index.pb,8\8\88a9255124c95bdc913197c120a8d560edc59c8e
+S
+#.idea/sonarlint/issuestore/index.pb,9\f\9fe84ebb15faf917b7def6236dba604453cc61e0
+C
+src/Entity/Etat.php,e\3\e37c460c47c615bc9684baad5b5ae744eefcca58
+Q
+!src/Repository/EtatRepository.php,a\f\af3d5b10e8d34ea8babe76010c064d71080de28d

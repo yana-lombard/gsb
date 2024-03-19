@@ -67,6 +67,11 @@ class FraisForfait
         return $this->lignesFraisForfaits;
     }
 
+    public function setLignesFraisForfaits(): Collection
+    {
+        return $this->lignesFraisForfaits;
+    }
+
     public function addLignesFraisForfait(LigneFraisForfait $lignesFraisForfait): static
     {
         if (!$this->lignesFraisForfaits->contains($lignesFraisForfait)) {

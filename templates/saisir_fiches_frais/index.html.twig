@@ -3,5 +3,57 @@
 {% block title %}Saisie de mes fiches frais{% endblock %}
 
 {% block body %}
+    <div class="container">
+    <h1>Renseigner ma fiche de frais du mois {{ "now"|date("m/Y") }}</h1>
+
+    <h2>Frais forfaitisés</h2>
+    {{ form_start(formFraisForfait) }}
+    {{ form_row(formFraisForfait.fraisForfaitEtape, {'label': 'Frais forfait Etape'}) }}
+    {{ form_row(formFraisForfait.fraisForfaitKm, {'label': 'Frais forfait Km'}) }}
+    {{ form_row(formFraisForfait.fraisForfaitNuitee, {'label': 'Frais forfait Nuitée'}) }}
+    {{ form_row(formFraisForfait.fraisForfaitRepas, {'label': 'Frais forfait Repas'}) }}
+
+    <button type="submit">Ajouter</button>
+    <button type="reset">Effacer</button>
+    {{ form_end(formFraisForfait) }}
+
+
+    <h2>Frais hors forfait</h2>
+    {{ form_start(formFraisHorsForfait) }}
+    {{ form_row(formFraisHorsForfait.date, {'label': 'Date (jour/mois/année)'}) }}
+    {{ form_row(formFraisHorsForfait.libelle, {'label': 'Libellé'}) }}
+    {{ form_row(formFraisHorsForfait.montant, {'label': 'Montant'}) }}
+    <button type="submit">Ajouter</button>
+    <button type="reset">Effacer</button>
+    {{ form_end(formFraisHorsForfait) }}
+
+    {% if ficheFrais.ligneFraisHorsForfaits.count != 0 %}
+        <div class="card">
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Libellé</th>
+                        <th>Date</th>
+                        <th>Montant</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for ligne_frais_hors_forfait in ficheFrais.ligneFraisHorsForfaits %}
+                        <tr>
+                            <td>{{ ligne_frais_hors_forfait.libelle }}</td>
+                            <td>{{ ligne_frais_hors_forfait.date|date('d/m/Y') }}</td>
+                            <td>{{ ligne_frais_hors_forfait.montant }}</td>
+                            <td>
+                                {{ include('ligne_frais_hors_forfait/_delete_form.html.twig') }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        </div>
+    {% endif %}
 
 {% endblock %}

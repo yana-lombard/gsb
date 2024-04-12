@@ -11,8 +11,10 @@ class SaisirFichesFFType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('field_name')
-        ;
+            ->add('fraisForfaitEtape')
+            ->add('fraisForfaitKm')
+            ->add('fraisForfaitNuitee')
+            ->add('fraisForfaitRepas');
     }
 
     public function configureOptions(OptionsResolver $resolver): void

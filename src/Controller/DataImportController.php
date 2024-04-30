@@ -19,6 +19,7 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 #[Route('/import')]
 class DataImportController extends AbstractController
 {
+
     public function __construct(EntityManagerInterface $entityManager)
     {
         $this->entityManager = $entityManager;
@@ -27,8 +28,10 @@ class DataImportController extends AbstractController
     #[Route('/user', name: 'app_data_import_user')]
     public function index(EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher): Response
     {
+        // Récupération des données du fichier JSON
         $usersjson = file_get_contents('./visiteur.json');
         $users = json_decode($usersjson, true);
+        // Parcours des données pour les insérer dans la base de données
         foreach ($users as $user) {
             $newUser = new User();
             $newUser->setOldId($user['id']);
@@ -56,9 +59,11 @@ class DataImportController extends AbstractController
     #[Route('/fichefrais', name: 'app_data_import_ficheFrais')]
     public function ficheFrais(EntityManagerInterface $entityManager, ManagerRegistry $doctrine): Response
     {
+        // Récupération des données du fichier JSON
         $fichesFraisjson = file_get_contents('./ficheFrais.json');
         $fichesFrais = json_decode($fichesFraisjson, true);
 
+        // Parcours des données pour les insérer dans la base de données
         foreach ($fichesFrais as $ficheFrais) {
             $newFf = new FicheFrais();
             $newFf->setMois($ficheFrais['mois']);
@@ -67,6 +72,7 @@ class DataImportController extends AbstractController
             $newFf->setDateModif(new \DateTime($ficheFrais['dateModif']));
             $user = $doctrine->getRepository(User::class)->findOneBy(['oldId' => $ficheFrais ['idVisiteur']]);
             $newFf->setUser($user);
+            // Récupération de l'état de la fiche de frais
             switch ($ficheFrais ['idEtat']) {
                 case "CL":
                     $etat = $doctrine->getRepository(Etat::class)->find('1');
@@ -99,9 +105,11 @@ class DataImportController extends AbstractController
     #[Route('/fichefraisHF', name: 'app_data_import_ficheFraisHF')]
     public function ficheFraisHF( ManagerRegistry $doctrine): Response
     {
+        // Récupération des données du fichier JSON
         $fichefraisHFjson = file_get_contents('./lignefraishorsforfait.json');
         $fichefraisHFs = json_decode($fichefraisHFjson, true);
 
+        // Parcours des données pour les insérer dans la base de données
         foreach ($fichefraisHFs as $fichefraisHF) {
 
             $newFicheHF = new LigneFraisHorsForfait();
@@ -124,8 +132,11 @@ class DataImportController extends AbstractController
     #[Route('/lignesff', name: 'app_data_import_lignesff')]
     public function lignesff(ManagerRegistry $doctrine): Response
     {
+        // Récupération des données du fichier JSON
         $lignesfraisforfaitjson = file_get_contents('./lignefraisforfait.json');
         $lignesfraisforfait = json_decode($lignesfraisforfaitjson);
+
+        // Parcours des données pour les insérer dans la base de données
         foreach ($lignesfraisforfait as $lignefraisforfait) {
             $newlignefraisforfait = new LigneFraisForfait(null, null, null);
             $theUser = $doctrine->getRepository(User::class)->findOneBy(['oldId' => $lignefraisforfait->idVisiteur]);
@@ -133,6 +144,7 @@ class DataImportController extends AbstractController
             $newlignefraisforfait->setFichefrais($theFicheFrais);
             $newlignefraisforfait->setQuantite($lignefraisforfait->quantite);
 
+            // Récupération du frais forfait
             switch ($lignefraisforfait->idFraisForfait) {
                 case 'ETP' :
                     $newlignefraisforfait->setFraisforfait($doctrine->getRepository(FraisForfait::class)->find(1));

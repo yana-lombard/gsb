@@ -20,7 +20,7 @@ class MonthSelectorFormType extends AbstractType
         $builder
             ->add('selectedMonth', ChoiceType::class, [
                 'choices' => $mesFiches,
-                'label' => 'Selecter le mois',
+                'label' => 'Selectionner le mois',
                 'choice_label' => function ($choice){
                     $date = DateTimeImmutable::createFromFormat('Ym', $choice->getMois()) ;
                     return $date->format('M-Y');

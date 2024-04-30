@@ -25,8 +25,6 @@ W
 'src/Controller/DataImportController.php,7\b\7b887684f50f61dbc59f207136516ff2aeeea5c5
 Q
 !src/Controller/EtatController.php,e\3\e33bb336cd05e345bf5376e7c92721a68b029c02
-W
-'src/Controller/CreateUserController.php,4\d\4d1e5b3eb0bea8b7b9f88a1b39f703f21cc5240a
 D
 config/services.yaml,8\7\87042d1f46b57381244d70e7a42feeb7710727dc
 R
@@ -59,8 +57,6 @@ H
 templates/base.html.twig,f\f\ffb3f1cfd73fdec1f0c80c63d0b5bbc1fff22022
 Q
 !src/Repository/UserRepository.php,9\4\943a623b5e2fd95ea78f6287fc600a6f8e0a5235
-U
-%templates/create_user/index.html.twig,4\a\4abf0217915ca6dabab7645d798e5ab75c3c4a0d
 T
 $templates/connection/index.html.twig,d\c\dc4ade54d700f68fc2c4ca20a83280f272a5542e
 :
@@ -90,3 +86,15 @@ b
 2src/Controller/LigneFraisHorsForfaitController.php,7\e\7ef859412a2192a624744cc82a076c81bb490da4
 d
 4templates/ligne_frais_forfait/_delete_form.html.twig,a\c\acb0406a7b01078edb75791ea045272dab5b9bd6
+M
+config/packages/security.yaml,c\5\c5f941b4d4e9404f23935164fabdd261abb68e93
+S
+#templates/comptable/index.html.twig,5\b\5b67105feb28c3092c7b394894c10d2c4e8423d0
+Z
+*templates/create_comptable/error.html.twig,d\5\d578556b037f444f3da3f442c98c63e0ff0cf242
+\
+,src/Controller/CreateComptableController.php,e\8\e8be667b3f93fc73779dcfd1690bc932aaf77c44
+Z
+*templates/create_comptable/index.html.twig,2\d\2daa4719be957f3f2450942b1d2538c91fd7b811
+V
+&src/Controller/ComptableController.php,5\5\554df2bb658add3aa8a8687adfde37a1306341da

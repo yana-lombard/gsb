@@ -15,6 +15,7 @@ class CreateComptableController extends AbstractController
     #[Route('/create/comptable', name: 'app_create_comptable')]
     public function index(UserPasswordHasherInterface $passwordHasher , EntityManagerInterface $entityManager, UserRepository $userRepository): Response
     {
+        // Créez un nouvel utilisateur
         $email = "comptable@gmail.com";
         $existingUser = $userRepository->findOneBy(['email' => $email]);
 
@@ -25,6 +26,7 @@ class CreateComptableController extends AbstractController
             ]);
         }
 
+        //Création du comptable
         $theUser = new User();
         $theUser->setEmail($email);
         $theUser->setLogin("comptable");
@@ -38,12 +40,14 @@ class CreateComptableController extends AbstractController
         $theUser->setRoles(['ROLE_COMPTABLE']);
         $plainTextPassword = "1234";
 
+        // Hasher le mot de passe
         $hashedPassword = $passwordHasher->hashPassword(
             $theUser,
             $plainTextPassword
         );
         $theUser->setPassword($hashedPassword);
 
+        // Enregistrer l'utilisateur dans la base de données
         $entityManager->persist($theUser);
         $entityManager->flush();
 
